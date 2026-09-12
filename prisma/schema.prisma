@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum OrganizationSize {
+  MICRO
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum SubscriptionPlan {
+  TRIAL
+  BASIC
+  PRO
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  HR_MANAGER
+  EMPLOYEE
+}
+
+/// App profile mirrored from Supabase Auth. `id` matches `auth.users.id`.
+model User {
+  id          String   @id @db.Uuid
+  email       String   @unique
+  fullName    String
+  isSuperuser Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  memberships Membership[]
+}
+
+model Organization {
+  id               String            @id @default(cuid())
+  name             String
+  slug             String            @unique
+  industry         String?
+  size             OrganizationSize?
+  country          String            @default("KE")
+  timezone         String            @default("Africa/Nairobi")
+  subscriptionPlan SubscriptionPlan  @default(TRIAL)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  memberships Membership[]
+}
+
+/// Join table so a user can belong to multiple orgs later without a rewrite.
+/// v1 assumes one membership per user.
+model Membership {
+  id             String         @id @default(cuid())
+  userId         String         @db.Uuid
+  organizationId String
+  role           MembershipRole
+  createdAt      DateTime       @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+  @@index([userId])
+}
