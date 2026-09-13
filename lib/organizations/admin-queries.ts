@@ -9,6 +9,7 @@ export async function listOrganizations() {
   return prisma.organization.findMany({
     orderBy: { createdAt: "desc" },
     include: {
+      domains: { orderBy: { domain: "asc" } },
       _count: { select: { memberships: true } },
     },
   });

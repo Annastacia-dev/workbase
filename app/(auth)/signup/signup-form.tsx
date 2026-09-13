@@ -59,7 +59,7 @@ export function SignupForm() {
       <CardHeader>
         <CardTitle>Create your Workbase account</CardTitle>
         <CardDescription>
-          Start a 14-day trial for your Kenyan HR workspace.
+          Start a 14-day trial for your people operations workspace.
         </CardDescription>
       </CardHeader>
       <CardContent>

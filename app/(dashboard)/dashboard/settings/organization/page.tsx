@@ -29,8 +29,7 @@ export default async function OrganizationSettingsPage() {
           Organization settings
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          These details apply to every employee, payroll, and leave record in
-          this workspace.
+          These details apply to everyone in this people operations workspace.
         </p>
       </div>
       <Card>
@@ -38,7 +37,10 @@ export default async function OrganizationSettingsPage() {
           <CardTitle>{organization.name}</CardTitle>
           <CardDescription>
             Slug <span className="font-mono">{organization.slug}</span> ·{" "}
-            {organization.country} · {organization.subscriptionPlan}
+            {organization.countries.length > 0
+              ? organization.countries.join(", ")
+              : organization.country}{" "}
+            · {organization.subscriptionPlan}
           </CardDescription>
         </CardHeader>
         <CardContent>

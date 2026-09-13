@@ -5,10 +5,14 @@ import { redirect } from "next/navigation";
 import { getAuthenticatedUser } from "@/lib/auth/session";
 import { isSuperuser } from "@/lib/auth/superuser";
 import { prisma } from "@/lib/db/prisma";
-import type { Membership, Organization } from "@prisma/client";
+import type { Membership, Organization, OrganizationDomain } from "@prisma/client";
+
+export type CurrentOrganization = Organization & {
+  domains: OrganizationDomain[];
+};
 
 export type CurrentOrgContext = {
-  organization: Organization;
+  organization: CurrentOrganization;
   membership: Membership;
   role: Membership["role"];
   user: {
@@ -25,7 +29,11 @@ export async function getCurrentMembership() {
 
   const membership = await prisma.membership.findFirst({
     where: { userId: user.id },
-    include: { organization: true },
+    include: {
+      organization: {
+        include: { domains: { orderBy: { domain: "asc" } } },
+      },
+    },
   });
 
   if (!membership) {

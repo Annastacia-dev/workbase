@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Workbase",
-  description: "Multi-tenant HR management for Kenyan organizations.",
+  description: "People operations for African organizations.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -136,13 +136,13 @@ export default function HomePage() {
 
         <section className="flex flex-col items-center text-center">
           <h1 className="max-w-xl text-4xl font-semibold tracking-tight text-balance text-neutral-950 sm:text-5xl sm:leading-[1.05] xl:text-[3.25rem]">
-            Payroll is happening.
+            People operations is happening.
             <br />
-            Are you still in Excel?
+            Built for Africa.
           </h1>
           <p className="mt-6 max-w-md text-base leading-7 text-neutral-500">
-            Workbase puts employees, leave, and Kenyan payroll in one workspace.
-            Your admin sets up the company. You sign in and get to work.
+            Workbase puts employees, leave, payroll, and people ops in one
+            workspace — for companies in one country or across the continent.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -192,7 +192,7 @@ export default function HomePage() {
           >
             <p className="text-xs text-neutral-400">Samuel Otieno</p>
             <p className="mt-3 text-sm leading-6 text-neutral-600">
-              Software Engineer · Nairobi
+              Software Engineer · Nairobi · Lagos
             </p>
             <p className="mt-1 text-sm leading-6 text-neutral-500">
               Started 4 Mar 2024
@@ -215,18 +215,18 @@ export default function HomePage() {
           >
             <p className="text-xs text-neutral-400">This month</p>
             <p className="mt-3 text-sm leading-6 text-neutral-600">
-              PAYE, NSSF, and SHIF are ready for filing.
+              PAYE and social security are ready for filing.
             </p>
           </FloatCard>
           <div className="flex flex-col items-end gap-2.5">
             <Pill
               icon={<ShieldCheck className="size-3.5" />}
-              label="PAYE, NSSF, SHIF"
+              label="People operations"
               className="rotate-2 bg-neutral-950 text-white"
             />
             <Pill
               icon={<Banknote className="size-3.5" />}
-              label="Built for Kenya"
+              label="Built for Africa"
               className="-mr-3 -rotate-1 bg-violet-100 text-violet-800"
             />
           </div>

@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { listOrganizations } from "@/lib/organizations/admin-queries";
+import {
+  companyTypeLabel,
+  countryLabel,
+  structureLabel,
+} from "@/lib/organizations/constants";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -52,14 +57,21 @@ export default async function AdminHomePage() {
                 <CardTitle>{organization.name}</CardTitle>
                 <CardDescription>
                   <span className="font-mono">{organization.slug}</span>
-                  {organization.industry ? ` · ${organization.industry}` : ""}
-                  {organization.size ? ` · ${organization.size}` : ""}
+                  {organization.companyType
+                    ? ` · ${companyTypeLabel(organization.companyType)}`
+                    : ""}
+                  {` · ${structureLabel(organization.structure)}`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
                 {organization._count.memberships} member
                 {organization._count.memberships === 1 ? "" : "s"} ·{" "}
-                {organization.country} · {organization.subscriptionPlan}
+                {organization.countries.length > 0
+                  ? organization.countries.map(countryLabel).join(", ")
+                  : countryLabel(organization.country)}
+                {organization.domains.length > 0
+                  ? ` · ${organization.domains.map((item) => item.domain).join(", ")}`
+                  : ""}
               </CardContent>
             </Card>
           ))}

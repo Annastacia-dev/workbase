@@ -23,8 +23,8 @@ export default async function DashboardPage() {
           Welcome to {organization.name}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Organization module is live. Employees, payroll, and leave will plug
-          into this tenant next.
+          People operations for this workspace starts here. Employees, payroll,
+          and leave will plug into this tenant next.
         </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -39,8 +39,10 @@ export default async function DashboardPage() {
               {organization.slug}
             </p>
             <p>
-              <span className="text-muted-foreground">Country:</span>{" "}
-              {organization.country}
+              <span className="text-muted-foreground">Countries:</span>{" "}
+              {organization.countries.length > 0
+                ? organization.countries.join(", ")
+                : organization.country}
             </p>
             <p>
               <span className="text-muted-foreground">Timezone:</span>{" "}

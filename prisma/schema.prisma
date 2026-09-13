@@ -28,6 +28,26 @@ enum MembershipRole {
   EMPLOYEE
 }
 
+enum OrganizationStructure {
+  SINGLE_COUNTRY
+  MULTI_COUNTRY
+}
+
+enum CompanyType {
+  PRIVATE_LIMITED
+  PUBLIC_LIMITED
+  SOLE_PROPRIETORSHIP
+  PARTNERSHIP
+  LIMITED_LIABILITY_PARTNERSHIP
+  BRANCH
+  HOLDING
+  SUBSIDIARY
+  NGO
+  COOPERATIVE
+  GOVERNMENT
+  OTHER
+}
+
 /// App profile mirrored from Supabase Auth. `id` matches `auth.users.id`.
 model User {
   id          String   @id @db.Uuid
@@ -40,18 +60,36 @@ model User {
 }
 
 model Organization {
-  id               String            @id @default(cuid())
+  id               String                 @id @default(cuid())
   name             String
-  slug             String            @unique
+  slug             String                 @unique
   industry         String?
   size             OrganizationSize?
-  country          String            @default("KE")
-  timezone         String            @default("Africa/Nairobi")
-  subscriptionPlan SubscriptionPlan  @default(TRIAL)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  companyType      CompanyType?
+  structure        OrganizationStructure  @default(SINGLE_COUNTRY)
+  country          String                 @default("KE")
+  countries        String[]               @default([])
+  timezone         String                 @default("Africa/Nairobi")
+  subscriptionPlan SubscriptionPlan       @default(TRIAL)
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
 
   memberships Membership[]
+  domains     OrganizationDomain[]
+}
+
+/// Email / web domains used to identify a company workspace.
+model OrganizationDomain {
+  id             String   @id @default(cuid())
+  organizationId String
+  domain         String
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, domain])
+  @@index([organizationId])
+  @@index([domain])
 }
 
 /// Join table so a user can belong to multiple orgs later without a rewrite.
