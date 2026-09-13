@@ -12,6 +12,8 @@ import {
   Users,
 } from "lucide-react";
 
+import { SignInDialog } from "@/components/sign-in-dialog";
+
 function BrandMark() {
   return (
     <Link href="/" className="flex items-center gap-2 text-[15px] font-semibold tracking-tight">
@@ -72,12 +74,14 @@ export default function HomePage() {
     <div className="relative flex min-h-full flex-1 flex-col overflow-hidden bg-[#f7f7f8] [background-image:linear-gradient(to_right,#ececee_1px,transparent_1px),linear-gradient(to_bottom,#ececee_1px,transparent_1px)] [background-size:48px_48px]">
       <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5">
         <BrandMark />
-        <Link
-          href="/login"
-          className="inline-flex h-10 items-center rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
-        >
-          Sign in
-        </Link>
+        <SignInDialog>
+          <button
+            type="button"
+            className="inline-flex h-10 items-center rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
+          >
+            Sign in
+          </button>
+        </SignInDialog>
       </header>
 
       <main className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-6 py-10 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
@@ -148,12 +152,14 @@ export default function HomePage() {
               Get started
               <ArrowRight className="size-4" />
             </Link>
-            <Link
-              href="/login"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-6 text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
-            >
-              Sign in
-            </Link>
+            <SignInDialog>
+              <button
+                type="button"
+                className="inline-flex h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-6 text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
+              >
+                Sign in
+              </button>
+            </SignInDialog>
           </div>
 
           <div className="mt-12 grid w-full max-w-2xl gap-4 text-left sm:grid-cols-2 xl:hidden">
