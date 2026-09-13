@@ -1,46 +1,16 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import {
+  ArrowRight,
   Banknote,
   Building2,
   CalendarDays,
+  Clock3,
+  Mail,
+  MessageCircle,
   ShieldCheck,
   Users,
 } from "lucide-react";
-
-const nav = [
-  { href: "#product", label: "Product" },
-  { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-];
-
-const tools = [
-  { name: "Employees", hint: "People records", icon: Users, rotate: "-rotate-6 translate-y-8" },
-  { name: "Leave", hint: "Approvals on time", icon: CalendarDays, rotate: "-rotate-3 translate-y-2" },
-  {
-    name: "Payroll",
-    hint: "PAYE, NSSF and SHIF ready",
-    icon: Banknote,
-    featured: true,
-    rotate: "translate-y-0",
-  },
-  { name: "Organization", hint: "One tenant workspace", icon: Building2, rotate: "rotate-3 translate-y-2" },
-  { name: "Compliance", hint: "Kenyan statutory filings", icon: ShieldCheck, rotate: "rotate-6 translate-y-8" },
-];
-
-const features = [
-  {
-    title: "Payroll that knows Kenya",
-    body: "Run PAYE, NSSF, and SHIF in the same workspace as your people records — without exporting to a spreadsheet.",
-  },
-  {
-    title: "Leave without the email chain",
-    body: "Balances, approvals, and public holidays live with the employee. Managers see what is pending in one place.",
-  },
-  {
-    title: "One organization, clean isolation",
-    body: "Every record is scoped to your company. Your admin sets up the workspace; your team just signs in.",
-  },
-];
 
 function BrandMark() {
   return (
@@ -54,125 +24,190 @@ function BrandMark() {
   );
 }
 
+function FloatCard({
+  icon,
+  title,
+  children,
+}: {
+  icon: ReactNode;
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="rounded-2xl bg-white p-4 text-left shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5">
+      <div className="mb-2.5 flex items-center gap-2 text-[13px] font-medium text-neutral-900">
+        {icon}
+        {title}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Pill({
+  icon,
+  label,
+  className,
+}: {
+  icon: ReactNode;
+  label: string;
+  className: string;
+}) {
+  return (
+    <span
+      className={`inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium ${className}`}
+    >
+      {icon}
+      {label}
+    </span>
+  );
+}
+
 export default function HomePage() {
   return (
-    <div className="flex min-h-full flex-1 bg-neutral-100 p-3 md:p-4">
-      <div className="relative flex min-h-[calc(100vh-1.5rem)] w-full flex-1 flex-col overflow-hidden rounded-[1.75rem] bg-white md:min-h-[calc(100vh-2rem)] md:rounded-[2rem]">
-        <header className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-5 md:px-10">
-          <BrandMark />
-          <nav className="hidden items-center gap-7 text-sm text-neutral-500 lg:flex">
-            {nav.map((item) => (
-              <a key={item.href} href={item.href} className="transition-colors hover:text-neutral-950">
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <div className="flex items-center gap-2">
+    <div className="relative flex min-h-full flex-1 flex-col overflow-hidden bg-[#f7f7f8] [background-image:linear-gradient(to_right,#ececee_1px,transparent_1px),linear-gradient(to_bottom,#ececee_1px,transparent_1px)] [background-size:48px_48px]">
+      <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
+        <BrandMark />
+        <Link
+          href="/login"
+          className="inline-flex h-10 items-center rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
+        >
+          Sign in
+        </Link>
+      </header>
+
+      <main className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 items-center gap-10 px-6 py-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] xl:grid-cols-[260px_minmax(0,1fr)_260px] xl:gap-12">
+        <aside className="hidden flex-col gap-4 lg:flex">
+          <FloatCard
+            icon={<Mail className="size-3.5 text-sky-600" />}
+            title="Leave request"
+          >
+            <p className="text-[11px] text-neutral-400">From: jane@acme.co.ke</p>
+            <p className="mt-1 text-[11px] text-neutral-400">Subject: Annual leave · 12–16 May</p>
+            <p className="mt-2 text-xs leading-5 text-neutral-600">
+              Hi, I would like to take leave next week. Coverage is arranged with
+              Samuel.
+            </p>
+          </FloatCard>
+          <FloatCard
+            icon={<MessageCircle className="size-3.5 text-emerald-600" />}
+            title="Approvals"
+          >
+            <p className="text-[11px] text-neutral-400">#people-ops</p>
+            <p className="mt-2 text-xs leading-5 text-neutral-600">
+              <span className="font-medium text-neutral-900">@mike</span> Can you
+              approve Jane’s leave?
+            </p>
+            <p className="mt-1 text-xs leading-5 text-neutral-600">
+              <span className="font-medium text-neutral-900">@sarah</span> On it,
+              checking the balance.
+            </p>
+          </FloatCard>
+          <FloatCard
+            icon={<Banknote className="size-3.5 text-amber-600" />}
+            title="Payroll run"
+          >
+            <p className="text-xs leading-5 text-neutral-600">
+              March 2026 · 48 employees
+            </p>
+            <p className="mt-1 text-sm font-medium text-neutral-900">KES 2.4M net</p>
+          </FloatCard>
+          <Pill
+            icon={<CalendarDays className="size-3" />}
+            label="Leave balances"
+            className="bg-neutral-950 text-white"
+          />
+        </aside>
+
+        <section className="flex flex-col items-center text-center">
+          <h1 className="max-w-xl text-[2.5rem] font-semibold tracking-tight text-neutral-950 sm:text-5xl sm:leading-[1.05] md:text-[3.4rem]">
+            Payroll is happening.
+            <br />
+            Are you still in Excel?
+          </h1>
+          <p className="mt-5 max-w-md text-[15px] leading-7 text-neutral-500">
+            Workbase puts employees, leave, and Kenyan payroll in one workspace.
+            Your admin sets up the company. You sign in and get to work.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/signup"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-neutral-950 px-5 text-sm font-medium text-white hover:bg-neutral-800"
+            >
+              Get started
+              <ArrowRight className="size-4" />
+            </Link>
             <Link
               href="/login"
-              className="inline-flex h-10 items-center rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium text-neutral-900 shadow-sm transition-colors hover:bg-neutral-50"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-5 text-sm font-medium text-neutral-900 shadow-sm hover:bg-neutral-50"
             >
               Sign in
             </Link>
-            <Link
-              href="/signup"
-              className="inline-flex h-10 items-center rounded-full bg-neutral-950 px-5 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
-            >
-              Get started
-            </Link>
           </div>
-        </header>
 
-        <main className="flex flex-1 flex-col">
-          <section
-            id="product"
-            className="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-6 pb-16 pt-8 text-center md:pt-4"
+          <div className="mt-10 grid w-full max-w-md gap-3 text-left lg:hidden">
+            <FloatCard
+              icon={<CalendarDays className="size-3.5 text-sky-600" />}
+              title="Leave request"
+            >
+              <p className="text-xs leading-5 text-neutral-600">
+                Jane Wanjiku · Annual leave · 12–16 May
+              </p>
+            </FloatCard>
+            <FloatCard
+              icon={<Banknote className="size-3.5 text-amber-600" />}
+              title="Payroll run"
+            >
+              <p className="text-xs leading-5 text-neutral-600">
+                March 2026 · 48 employees · KES 2.4M net
+              </p>
+            </FloatCard>
+          </div>
+        </section>
+
+        <aside className="hidden flex-col gap-4 lg:flex">
+          <FloatCard
+            icon={<Users className="size-3.5 text-violet-600" />}
+            title="Employee"
           >
-            <div className="mb-8 flex size-10 items-center justify-center rounded-xl bg-neutral-50 shadow-sm ring-1 ring-neutral-100">
-              <Building2 className="size-4 text-neutral-500" />
-            </div>
-            <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-neutral-950 sm:text-5xl md:text-[3.25rem] md:leading-[1.1]">
-              Payroll, leave, and people ops in one workspace
-            </h1>
-            <p className="mt-5 max-w-lg text-base leading-7 text-neutral-500">
-              Workbase is HR software built for Kenyan organizations. Your admin
-              sets up the company. You sign in and get to work.
+            <p className="text-[11px] text-neutral-400">Samuel Otieno</p>
+            <p className="mt-1 text-xs leading-5 text-neutral-600">
+              Software Engineer · Nairobi
             </p>
-
-            <div className="mt-12 flex w-full max-w-3xl items-end justify-center gap-2 sm:mt-14 sm:gap-5 md:gap-8">
-              {tools.map((tool) => {
-                const Icon = tool.icon;
-                return (
-                  <div
-                    key={tool.name}
-                    className={`flex flex-col items-center ${tool.rotate}`}
-                  >
-                    <div
-                      className={`flex size-12 items-center justify-center rounded-2xl bg-neutral-50 shadow-sm ring-1 ring-black/5 sm:size-16 md:size-[4.5rem] ${
-                        tool.featured ? "ring-black/10 shadow-md" : ""
-                      }`}
-                    >
-                      <Icon
-                        className={`size-5 sm:size-7 md:size-8 ${
-                          tool.featured ? "text-neutral-950" : "text-neutral-400"
-                        }`}
-                      />
-                    </div>
-                    {tool.featured ? (
-                      <div className="mt-4">
-                        <p className="text-sm font-semibold text-neutral-950">
-                          {tool.name}
-                        </p>
-                        <p className="text-xs text-neutral-400">{tool.hint}</p>
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          <section id="features" className="mx-auto w-full max-w-5xl px-6 pb-20">
-            <div className="grid gap-4 md:grid-cols-3">
-              {features.map((feature) => (
-                <article
-                  key={feature.title}
-                  className="rounded-2xl bg-neutral-50 px-5 py-6 text-left ring-1 ring-black/5"
-                >
-                  <h2 className="text-base font-semibold tracking-tight text-neutral-950">
-                    {feature.title}
-                  </h2>
-                  <p className="mt-2 text-sm leading-6 text-neutral-500">
-                    {feature.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section
-            id="pricing"
-            className="mx-auto w-full max-w-3xl px-6 pb-20 text-center"
+            <p className="mt-1 text-xs text-neutral-500">Started 4 Mar 2024</p>
+          </FloatCard>
+          <FloatCard
+            icon={<Clock3 className="size-3.5 text-sky-600" />}
+            title="Attendance"
           >
-            <p className="text-sm font-medium text-neutral-400">Pricing</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-950">
-              Workspaces are set up by your admin
-            </h2>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-neutral-500">
-              Sign in if you already have access. New teammates can create an
-              account and wait to be added to their organization.
+            <p className="text-[11px] text-neutral-400">Today · 18 present</p>
+            <p className="mt-2 text-xs leading-5 text-neutral-600">
+              2 on leave · 1 late clock-in
             </p>
-            <div className="mt-6 flex justify-center">
-              <Link
-                href="/login"
-                className="inline-flex h-10 items-center rounded-full bg-neutral-950 px-5 text-sm font-medium text-white hover:bg-neutral-800"
-              >
-                Sign in
-              </Link>
-            </div>
-          </section>
-        </main>
-      </div>
+          </FloatCard>
+          <FloatCard
+            icon={<Building2 className="size-3.5 text-rose-500" />}
+            title="Statutory"
+          >
+            <p className="text-[11px] text-neutral-400">This month</p>
+            <p className="mt-2 text-xs leading-5 text-neutral-600">
+              PAYE, NSSF, and SHIF are ready for filing.
+            </p>
+          </FloatCard>
+          <div className="flex flex-col gap-2">
+            <Pill
+              icon={<ShieldCheck className="size-3" />}
+              label="PAYE, NSSF, SHIF"
+              className="bg-neutral-950 text-white"
+            />
+            <Pill
+              icon={<Banknote className="size-3" />}
+              label="Built for Kenya"
+              className="bg-violet-100 text-violet-800"
+            />
+          </div>
+        </aside>
+      </main>
     </div>
   );
 }
