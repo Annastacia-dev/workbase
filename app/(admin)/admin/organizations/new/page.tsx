@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function NewOrganizationPage() {
   return (
-    <div className="mx-auto max-w-lg">
+    <div className="w-full max-w-lg">
       <Card>
         <CardHeader>
           <CardTitle>Create an organization</CardTitle>
